@@ -1,5 +1,5 @@
 package de.unistuttgart.t2.domain;
 
-public enum OrderState {
+public enum OrderStatus {
 	SUCCESS, FAILURE;
 }

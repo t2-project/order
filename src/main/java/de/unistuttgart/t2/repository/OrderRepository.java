@@ -2,8 +2,8 @@ package de.unistuttgart.t2.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import de.unistuttgart.t2.domain.Order;
+import de.unistuttgart.t2.domain.OrderItem;
 
-public interface OrderRepository extends MongoRepository<Order, String> { 
+public interface OrderRepository extends MongoRepository<OrderItem, String> { 
 
 }
