@@ -1,11 +1,13 @@
 package de.unistuttgart.t2.order.saga;
 
-import org.hibernate.sql.ordering.antlr.OrderingSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import de.unistuttgart.t2.common.commands.order.OrderAction;
-import de.unistuttgart.t2.common.commands.order.OrderCommand;
-import de.unistuttgart.t2.common.commands.order.OrderCompensation;
+import de.unistuttgart.t2.common.commands.ActionCommand;
+import de.unistuttgart.t2.common.commands.CompensationCommand;
+import de.unistuttgart.t2.common.commands.SagaCommand;
+import de.unistuttgart.t2.common.domain.saga.SagaData;
 import de.unistuttgart.t2.common.replies.OrderCreated;
 import de.unistuttgart.t2.order.OrderService;
 import io.eventuate.tram.commands.consumer.CommandHandlerReplyBuilder;
@@ -18,13 +20,15 @@ import io.eventuate.tram.sagas.participant.SagaCommandHandlersBuilder;
 
 public class OrderCommandHandler {
 
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	private OrderService orderService;
 	
 	public CommandHandlers commandHandlers() {
-		return SagaCommandHandlersBuilder.fromChannel(OrderCommand.channel)
-				.onMessage(OrderAction.class, this::createOrder)
-				.onMessage(OrderCompensation.class, this::rejectOrder)
+		return SagaCommandHandlersBuilder.fromChannel(SagaCommand.order)
+				.onMessage(ActionCommand.class, this::createOrder)
+				.onMessage(CompensationCommand.class, this::rejectOrder)
 				.build();
 	}
 	
@@ -33,10 +37,13 @@ public class OrderCommandHandler {
 	 * @param cm
 	 * @return
 	 */
-	public Message createOrder(CommandMessage<OrderAction> cm) {
-		OrderAction cmd = cm.getCommand();
+	public Message createOrder(CommandMessage<ActionCommand> cm) {
+		LOG.info("order received action");
+		ActionCommand cmd = cm.getCommand();
+		SagaData data = cmd.getData();
 		
-		String orderId = orderService.createOrder(cmd.getSessionId());
+		String orderId = orderService.createOrder(data.getSessionId());
+		
 		OrderCreated reply = new OrderCreated(orderId);
 		return CommandHandlerReplyBuilder.withSuccess(reply);
 	}
@@ -46,10 +53,12 @@ public class OrderCommandHandler {
 	 * @param cm
 	 * @return
 	 */
-	public Message rejectOrder(CommandMessage<OrderCompensation> cm) {
-		OrderCompensation cmd = cm.getCommand();
+	public Message rejectOrder(CommandMessage<CompensationCommand> cm) {
+		LOG.info("order received  compensation");
+		CompensationCommand cmd = cm.getCommand();
+		SagaData data = cmd.getData();
 
-		orderService.rejectOrder(cmd.getOrderId());
+		orderService.rejectOrder(data.getOrderId());
 		return CommandHandlerReplyBuilder.withSuccess();
 	}
 }

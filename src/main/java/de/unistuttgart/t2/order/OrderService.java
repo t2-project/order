@@ -3,14 +3,20 @@ package de.unistuttgart.t2.order;
 import java.time.Instant;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.mysql.cj.log.Log;
 
 import de.unistuttgart.t2.domain.OrderItem;
 import de.unistuttgart.t2.domain.OrderStatus;
 import de.unistuttgart.t2.repository.OrderRepository;
 
-//@Transactional // TODO ?? 
+@Transactional 
 public class OrderService {
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	private OrderRepository orderRepository;
@@ -46,10 +52,13 @@ public class OrderService {
 	 * @throws NoSuchElementException if the id is in the db but retrieval fails anyway. 
 	 */
 	public void rejectOrder(String orderId) {
-
-		// missing order 
+		if (orderId == null) {
+			log.info("orderId is null");
+			return;
+		}
 		if (!orderRepository.existsById(orderId)) {
-			return; 
+			log.info(String.format("no order for Id %s ", orderId));
+			return;
 		}
 		
 		// update order
