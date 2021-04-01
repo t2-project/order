@@ -30,6 +30,8 @@ public class OrderService {
 	 * @return Id of the new Order
 	 */
 	public String createOrder(String sessionId) {
+		if (sessionId == null)
+			throw new IllegalArgumentException("cannot create order, sessionId is null");
 		
 		// create new Order
 		OrderItem item = new OrderItem(sessionId, OrderStatus.SUCCESS, Date.from(Instant.now()));
@@ -53,12 +55,10 @@ public class OrderService {
 	 */
 	public void rejectOrder(String orderId) {
 		if (orderId == null) {
-			log.info("orderId is null");
-			return;
+			throw new IllegalArgumentException("orderId is null");
 		}
 		if (!orderRepository.existsById(orderId)) {
-			log.info(String.format("no order for Id %s ", orderId));
-			return;
+			throw new IllegalArgumentException(String.format("no order for Id %s ", orderId));
 		}
 		
 		// update order
