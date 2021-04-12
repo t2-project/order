@@ -1,4 +1,4 @@
-package de.unistuttgart.t2.domain;
+package de.unistuttgart.t2.repository;
 
 import java.util.Date;
 

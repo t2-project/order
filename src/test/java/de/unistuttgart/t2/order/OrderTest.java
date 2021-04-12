@@ -15,11 +15,10 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import de.unistuttgart.t2.common.domain.saga.CreditCardInfo;
-import de.unistuttgart.t2.common.domain.saga.SagaData;
-import de.unistuttgart.t2.domain.OrderItem;
-import de.unistuttgart.t2.domain.OrderStatus;
+import de.unistuttgart.t2.common.saga.SagaData;
+import de.unistuttgart.t2.repository.OrderItem;
 import de.unistuttgart.t2.repository.OrderRepository;
+import de.unistuttgart.t2.repository.OrderStatus;
 
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
@@ -32,7 +31,6 @@ public class OrderTest {
 	@Autowired
 	OrderRepository orderRepository;
 	
-	CreditCardInfo card;
 	SagaData data; 
 	
 	String orderid;
@@ -90,6 +88,4 @@ public class OrderTest {
 			orderService.rejectOrder("id_that_does_not_match_any_order");
 		});
 	}
-	
-	
 }

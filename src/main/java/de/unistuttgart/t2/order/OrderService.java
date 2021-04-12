@@ -10,17 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mysql.cj.log.Log;
 
-import de.unistuttgart.t2.domain.OrderItem;
-import de.unistuttgart.t2.domain.OrderStatus;
+import de.unistuttgart.t2.repository.OrderItem;
 import de.unistuttgart.t2.repository.OrderRepository;
+import de.unistuttgart.t2.repository.OrderStatus;
 
-@Transactional 
 public class OrderService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
+
 	@Autowired
 	private OrderRepository orderRepository;
-	
+
 	/**
 	 * Create a new Order and save it to the DB.
 	 * 
@@ -32,26 +31,31 @@ public class OrderService {
 	public String createOrder(String sessionId) {
 		if (sessionId == null)
 			throw new IllegalArgumentException("cannot create order, sessionId is null");
-		
+		return createOrderTx(sessionId);
+	}
+
+	@Transactional
+	private String createOrderTx(String sessionId) {
 		// create new Order
 		OrderItem item = new OrderItem(sessionId, OrderStatus.SUCCESS, Date.from(Instant.now()));
-		
+
 		// save order to DB
 		String orderId = orderRepository.save(item).getOrderId();
-		
-		//return generated order id
+
+		// return generated order id
 		return orderId;
 	}
 
 	/**
 	 * Set the state of an order to "FAILURE".
 	 * 
-	 * If the given id does not match any order nothing happens. 
-	 * This operation is idempotent, as a order may never change from "failure" to any other status.
-	 * 	
+	 * If the given id does not match any order nothing happens. This operation is
+	 * idempotent, as a order may never change from "failure" to any other status.
+	 * 
 	 * @param orderId - id of order that is to be rejected
 	 * 
-	 * @throws NoSuchElementException if the id is in the db but retrieval fails anyway. 
+	 * @throws NoSuchElementException if the id is in the db but retrieval fails
+	 *                                anyway.
 	 */
 	public void rejectOrder(String orderId) {
 		if (orderId == null) {
@@ -60,7 +64,12 @@ public class OrderService {
 		if (!orderRepository.existsById(orderId)) {
 			throw new IllegalArgumentException(String.format("no order for Id %s ", orderId));
 		}
-		
+		rejectOrderTx(orderId);
+
+	}
+	
+	@Transactional
+	private void rejectOrderTx(String orderId) {
 		// update order
 		OrderItem item = orderRepository.findById(orderId).get();
 		item.setStatus(OrderStatus.FAILURE);

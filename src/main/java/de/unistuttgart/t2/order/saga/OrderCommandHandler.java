@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import de.unistuttgart.t2.common.commands.ActionCommand;
-import de.unistuttgart.t2.common.commands.CompensationCommand;
-import de.unistuttgart.t2.common.commands.SagaCommand;
-import de.unistuttgart.t2.common.domain.saga.SagaData;
-import de.unistuttgart.t2.common.replies.OrderCreated;
-import de.unistuttgart.t2.domain.OrderStatus;
+import de.unistuttgart.t2.common.saga.OrderCreatedReply;
+import de.unistuttgart.t2.common.saga.SagaData;
+import de.unistuttgart.t2.common.saga.commands.ActionCommand;
+import de.unistuttgart.t2.common.saga.commands.CompensationCommand;
+import de.unistuttgart.t2.common.saga.commands.SagaCommand;
 import de.unistuttgart.t2.order.OrderService;
+import de.unistuttgart.t2.repository.OrderStatus;
 import io.eventuate.tram.commands.consumer.CommandHandlerReplyBuilder;
 import io.eventuate.tram.commands.consumer.CommandHandlers;
 import io.eventuate.tram.commands.consumer.CommandMessage;
@@ -43,7 +43,7 @@ public class OrderCommandHandler {
 
 		try {
 			String orderId = orderService.createOrder(data.getSessionId());
-			OrderCreated reply = new OrderCreated(orderId);
+			OrderCreatedReply reply = new OrderCreatedReply(orderId);
 			return CommandHandlerReplyBuilder.withSuccess(reply);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
