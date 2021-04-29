@@ -1,6 +1,6 @@
 # order
-the order service
-
+the order service.
+saves orders to a mongo db
 
 ## application properties
 
@@ -19,4 +19,3 @@ spring.datasource.password | SPRING_DATASOURCE_PASSWORD |
 spring.datasource.driver-class-name | SPRING_DATASOURCE_DRIVER_CLASS_NAME |
 eventuatelocal.kafka.bootstrap.servers | EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS |
 eventuatelocal.zookeeper.connection.string | EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING |
-
