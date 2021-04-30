@@ -9,7 +9,7 @@ property | read from env var | description |
 spring.data.mongodb.uri | MONGO_HOST | host of the mondo db 
 
 properties for the CDC. 
-see (eventuate tram cdc)[https://eventuate.io/docs/manual/eventuate-tram/latest/getting-started-eventuate-tram.html] for explanations.
+see  [eventuate tram cdc](https://eventuate.io/docs/manual/eventuate-tram/latest/getting-started-eventuate-tram.html) for explanations.
 
 property | read from env var | description |
 -------- | ----------------- | ----------- |
