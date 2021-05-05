@@ -30,20 +30,20 @@ public class OrderApplication {
 	}
 
 	@Bean
-	public OrderService paymentService() {
+	public OrderService orderService() {
 		return new OrderService();
 	}
 
 	@Bean
-	public OrderCommandHandler paymentCommandHandler() {
+	public OrderCommandHandler orderCommandHandler() {
 		return new OrderCommandHandler();
 	}
 
 	@Bean
-	public SagaCommandDispatcher paymentCommandDispatcher(OrderCommandHandler target,
+	public SagaCommandDispatcher orderCommandDispatcher(OrderCommandHandler target,
 			SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
 
-		return sagaCommandDispatcherFactory.make("paymentCommandDispatcher", target.commandHandlers());
+		return sagaCommandDispatcherFactory.make("orderCommandDispatcher", target.commandHandlers());
 	}
 
 }
