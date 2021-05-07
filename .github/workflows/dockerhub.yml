@@ -10,8 +10,15 @@ jobs:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
+    - name: set env
+      run: |
+         echo "TRAM_VERSION=${{secrets.TRAM_VERSION}}" >> $GITHUB_ENV
+         echo "JAEGER_VERSION=${{secrets.JAEGER_VERSION}}" >> $GITHUB_ENV
+         echo "RESILIENCE4J_VERSION=${{secrets.RESILIENCE4J_VERSION}}" >> $GITHUB_ENV
+         echo "JUNIT4_VERSION=${{secrets.JUNIT4_VERSION}}" >> $GITHUB_ENV
+         echo "TRAM_PARTICIPANT_VERSION=${{secrets.TRAM_PARTICIPANT_VERSION}}" >> $GITHUB_ENV
     - name: Login to DockerHub
-      uses: docker/login-action@v1 
+      uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -36,7 +43,7 @@ jobs:
     - name: verify order
       run: cd order && mvn clean install
 #
-# that's how cool kids would do their tags:       
+# that's how cool kids would do their tags:
 #        docker build -t stiesssh/order:${{ env.RELEASE_VERSION }} .
 #        docker push stiesssh/order:${{ env.RELEASE_VERSION }}
     - run: |
