@@ -15,10 +15,11 @@ import io.eventuate.tram.sagas.participant.SagaCommandDispatcherFactory;
 import io.eventuate.tram.sagas.spring.participant.SagaParticipantConfiguration;
 import io.eventuate.tram.spring.consumer.kafka.EventuateTramKafkaMessageConsumerConfiguration;
 import io.eventuate.tram.spring.messaging.producer.jdbc.TramMessageProducerJdbcConfiguration;
+import io.eventuate.tram.spring.optimisticlocking.OptimisticLockingDecoratorConfiguration;
 
 @Import({SagaParticipantConfiguration.class,
 	TramMessageProducerJdbcConfiguration.class,
-    EventuateTramKafkaMessageConsumerConfiguration.class})//, OptimisticLockingDecoratorConfiguration.class})
+    EventuateTramKafkaMessageConsumerConfiguration.class, OptimisticLockingDecoratorConfiguration.class})
 @EnableJpaRepositories
 @EnableAutoConfiguration
 @SpringBootApplication

@@ -73,7 +73,7 @@ public class OrderCommandHandler {
 		try {
 			orderService.rejectOrder(data.getOrderId());
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			LOG.info(e.getMessage());
 		}
 		return CommandHandlerReplyBuilder.withSuccess();
 	}
