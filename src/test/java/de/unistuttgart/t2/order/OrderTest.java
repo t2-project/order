@@ -3,10 +3,6 @@ package de.unistuttgart.t2.order;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.Instant;
-import java.util.Date;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,10 +12,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import de.unistuttgart.t2.common.saga.SagaData;
-import de.unistuttgart.t2.repository.OrderItem;
-import de.unistuttgart.t2.repository.OrderRepository;
-import de.unistuttgart.t2.repository.OrderStatus;
+import de.unistuttgart.t2.order.repository.OrderItem;
+import de.unistuttgart.t2.order.repository.OrderRepository;
+import de.unistuttgart.t2.order.repository.OrderStatus;
 
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
@@ -32,14 +27,12 @@ public class OrderTest {
 	
 	@Autowired
 	OrderRepository orderRepository;
-	
-	SagaData data; 
-	
+		
 	String orderid;
 	
 	@BeforeEach
 	public void setup() {
-		orderid = orderRepository.save(new OrderItem("sessionId", OrderStatus.SUCCESS, Date.from(Instant.now()))).getOrderId();
+		orderid = orderRepository.save(new OrderItem("sessionId")).getOrderId();
 	}
 	
 	@Test
@@ -57,13 +50,6 @@ public class OrderTest {
 	}
 	
 	@Test
-	public void testCreateOrder_failOnNull() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {	
-			orderService.createOrder(null);
-		});
-	}
-	
-	@Test
 	public void testRejectOrder() {
 		// execute	
 		orderService.rejectOrder(orderid);
@@ -75,19 +61,5 @@ public class OrderTest {
 		OrderItem item = orderRepository.findById(orderid).get();
 		assertEquals("sessionId", item.getSessionId());
 		assertEquals(OrderStatus.FAILURE, item.getStatus());
-	}
-	
-	@Test
-	public void testRejectOrder_failOnNull() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			orderService.rejectOrder(null);
-		});
-	}
-	
-	@Test
-	public void testRejectOrder_failWrongOrderId() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			orderService.rejectOrder("id_that_does_not_match_any_order");
-		});
 	}
 }

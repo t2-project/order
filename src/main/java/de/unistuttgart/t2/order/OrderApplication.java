@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import de.unistuttgart.t2.order.repository.OrderRepository;
 import de.unistuttgart.t2.order.saga.OrderCommandHandler;
-import de.unistuttgart.t2.repository.OrderRepository;
 import io.eventuate.tram.sagas.participant.SagaCommandDispatcher;
 import io.eventuate.tram.sagas.participant.SagaCommandDispatcherFactory;
 import io.eventuate.tram.sagas.spring.participant.SagaParticipantConfiguration;
@@ -43,7 +43,6 @@ public class OrderApplication {
 	@Bean
 	public SagaCommandDispatcher orderCommandDispatcher(OrderCommandHandler target,
 			SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
-
 		return sagaCommandDispatcherFactory.make("orderCommandDispatcher", target.commandHandlers());
 	}
 

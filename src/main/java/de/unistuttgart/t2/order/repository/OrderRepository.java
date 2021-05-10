@@ -1,4 +1,4 @@
-package de.unistuttgart.t2.repository;
+package de.unistuttgart.t2.order.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

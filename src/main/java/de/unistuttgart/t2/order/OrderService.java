@@ -1,78 +1,54 @@
 package de.unistuttgart.t2.order;
 
-import java.time.Instant;
-import java.util.Date;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mysql.cj.log.Log;
+import de.unistuttgart.t2.order.repository.OrderItem;
+import de.unistuttgart.t2.order.repository.OrderRepository;
+import de.unistuttgart.t2.order.repository.OrderStatus;
 
-import de.unistuttgart.t2.repository.OrderItem;
-import de.unistuttgart.t2.repository.OrderRepository;
-import de.unistuttgart.t2.repository.OrderStatus;
-
+/**
+ * 
+ * creates and updates orders.
+ * 
+ * @author maumau
+ *
+ */
+@Transactional
 public class OrderService {
-	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Autowired
-	private OrderRepository orderRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
-	/**
-	 * Create a new Order and save it to the DB.
-	 * 
-	 * @param productId
-	 * @param amount
-	 * @param total
-	 * @return Id of the new Order
-	 */
-	public String createOrder(String sessionId) {
-		if (sessionId == null)
-			throw new IllegalArgumentException("cannot create order, sessionId is null");
-		return createOrderTx(sessionId);
-	}
+    /**
+     * create a new Order and save it to the repository.
+     * 
+     * the status of the new order is {@link OrderStatus#SUCCESS SUCCESS}.
+     * 
+     * @param sessionId id of session to create order for
+     * @return orderId of created order
+     */
+    public String createOrder(String sessionId) {
 
-	@Transactional
-	private String createOrderTx(String sessionId) {
-		// create new Order
-		OrderItem item = new OrderItem(sessionId, OrderStatus.SUCCESS, Date.from(Instant.now()));
+        OrderItem item = new OrderItem(sessionId);
+        return orderRepository.save(item).getOrderId();
+    }
 
-		// save order to DB
-		String orderId = orderRepository.save(item).getOrderId();
+    /**
+     * Set the state of an order to {@link OrderStatus#FAILURE FAILURE}.
+     * 
+     * This operation is idempotent, as a order may never change from
+     * {@link OrderStatus#FAILURE FAILURE} to any other status.
+     * 
+     * @param orderId id of order that is to be rejected
+     * 
+     * @throws NoSuchElementException if the id is in the db but retrieval fails
+     *                                anyway.
+     */
+    public void rejectOrder(String orderId) {
 
-		// return generated order id
-		return orderId;
-	}
-
-	/**
-	 * Set the state of an order to "FAILURE".
-	 * 
-	 * If the given id does not match any order nothing happens. This operation is
-	 * idempotent, as a order may never change from "failure" to any other status.
-	 * 
-	 * @param orderId - id of order that is to be rejected
-	 * 
-	 * @throws NoSuchElementException if the id is in the db but retrieval fails
-	 *                                anyway.
-	 */
-	public void rejectOrder(String orderId) {
-		if (orderId == null) {
-			throw new IllegalArgumentException("orderId is null");
-		}
-		if (!orderRepository.existsById(orderId)) {
-			throw new IllegalArgumentException(String.format("no order for Id %s ", orderId));
-		}
-		rejectOrderTx(orderId);
-
-	}
-	
-	@Transactional
-	private void rejectOrderTx(String orderId) {
-		// update order
-		OrderItem item = orderRepository.findById(orderId).get();
-		item.setStatus(OrderStatus.FAILURE);
-		orderRepository.save(item);
-	}
+        OrderItem item = orderRepository.findById(orderId).get();
+        item.setStatus(OrderStatus.FAILURE);
+        orderRepository.save(item);
+    }
 }
