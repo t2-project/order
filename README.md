@@ -17,7 +17,7 @@ wget TODO
 ### Preparation 2
 
 Set the [applicaton properites](https://github.com/t2-project/order/tree/main/src/main/resources) according to your local setup. 
-Conferere [this section](#application-properties) for more details.
+Confere [this section](#application-properties) for more details.
 
 
 ### Build Dependency
@@ -31,7 +31,7 @@ mvn clean install
 
 And install it to your local maven repository:  
 ```
-mvn install:install-file -Dfile=./target/common-1.0-SNAPSHOT.jar  -DpomFile=./pom.xm
+mvn install:install-file -Dfile=./target/common-1.0-SNAPSHOT.jar  -DpomFile=./pom.xml
 ```
 
 ### Build and Run Order Service
