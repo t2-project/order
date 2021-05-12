@@ -3,12 +3,6 @@
 This service is part of the T2 Store.
 It is responsible for saving orders to the database.
 
-## Kubernetes 
-Apply this deployment: [order.yml](https://github.com/t2-project/kube/blob/main/saga/order.yaml)
-
-## Docker
-
-A docker image of this service may be found on DockerHub : [stiesssh/order](https://hub.docker.com/r/stiesssh/order)
 
 ## Build and Run Manually
 
@@ -57,12 +51,21 @@ There is a docker file in this repository, that you can use to build an image.
 docker build .
 ```
 
+## Kubernetes 
+
+Confere this repository: [https://github.com/t2-project/kube](https://github.com/t2-project/kube) 
+
+## Docker
+
+A docker image of this service may be found on DockerHub : [stiesssh/order](https://hub.docker.com/r/stiesssh/order)
+
+
 ## Usage
 
 This service listens to incoming messages on a queue named 'order'. 
 The [orchestrator](https://github.com/t2-project/orchestrator) sends messages to that queue. 
 
-Normally you would not want to interact directly with the order service. 
+Normally you do not want to interact directly with the order service. 
 However it might by usefull to run it localy for debugging. 
 
 ## Application Properties
