@@ -3,14 +3,21 @@
 This service is part of the T2 Store.
 It is responsible for saving orders to the database.
 
-## Build and Run
+## Kubernetes 
+Apply this deployment: [order.yml](https://github.com/t2-project/kube/blob/main/saga/order.yaml)
+
+## Docker
+
+A docker image of this service may be found on DockerHub : [stiesssh/order](https://hub.docker.com/r/stiesssh/order)
+
+## Build and Run Manually
 
 ### Preparation 1
 
-Set environment variables. Either manually or by sourcing this file: [setenv.sh](https://github.com/t2-project/path/to/setenv.sh)
+Set environment variables. Either manually or by sourcing this file: [setenv.sh](https://github.com/t2-project/kube/blob/main/setenv.sh)
 
 ```
-wget TODO
+wget https://raw.githubusercontent.com/t2-project/kube/main/setenv.sh
 . ./setenv.sh
 ```
 
@@ -20,7 +27,7 @@ Set the [applicaton properites](https://github.com/t2-project/order/tree/main/sr
 Confere [this section](#application-properties) for more details.
 
 
-### Build Dependency
+### Build Dependencies
 
 This service depends on [common](https://github.com/t2-project/common), thus you need to build common first:
 ```
@@ -45,20 +52,18 @@ cd order/
 
 ### Build Docker Image
 
-There is a Docker file in this repository. 
-You may build a docker image like this : 
+There is a docker file in this repository, that you can use to build an image. 
 ```
 docker build .
 ```
 
-A docker image of this service can also be found on DockerHub : [stiesssh/order](https://hub.docker.com/r/stiesssh/order)
-
 ## Usage
 
-This service listens to a messaging queue named ``order``. 
+This service listens to incoming messages on a queue named 'order'. 
+The [orchestrator](https://github.com/t2-project/orchestrator) sends messages to that queue. 
 
-You do not want to interact with this service directly.
-
+Normally you would not want to interact directly with the order service. 
+However it might by usefull to run it localy for debugging. 
 
 ## Application Properties
 
