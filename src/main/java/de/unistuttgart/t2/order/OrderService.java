@@ -14,6 +14,7 @@ import de.unistuttgart.t2.order.repository.OrderStatus;
  * @author maumau
  *
  */
+// i'm not sure whether this annotation has any use at all. but at this point i'm too afraid of all the things i could possibly break by removing it.
 @Transactional
 public class OrderService {
 
