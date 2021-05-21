@@ -1,7 +1,6 @@
 package de.unistuttgart.t2.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import de.unistuttgart.t2.order.repository.OrderItem;
 import de.unistuttgart.t2.order.repository.OrderRepository;
@@ -14,8 +13,6 @@ import de.unistuttgart.t2.order.repository.OrderStatus;
  * @author maumau
  *
  */
-// i'm not sure whether this annotation has any use at all. but at this point i'm too afraid of all the things i could possibly break by removing it.
-@Transactional
 public class OrderService {
 
     @Autowired
