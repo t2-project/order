@@ -108,11 +108,23 @@
 		</dependency>
 
         <!-- tracing -->
+        <!-- gives you Trace Bean, they say -->
         <dependency>
 	        <groupId>io.opentracing.contrib</groupId>
 		    <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
     		<version>${JAEGER_VERSION}</version>
 	    </dependency>
+        <!-- wants Tracer Bean, they say -->
+        <dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-spring-cloud-starter</artifactId>
+		    <version>0.5.9</version>
+        </dependency>
+        <!--dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-mongo-driver</artifactId>
+            <version>0.1.5</version>
+        </dependency-->
 
 	</dependencies>
 
