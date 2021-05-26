@@ -115,16 +115,16 @@
     		<version>${JAEGER_VERSION}</version>
 	    </dependency>
         <!-- wants Tracer Bean, they say -->
-        <dependency>
+        <!--dependency>
             <groupId>io.opentracing.contrib</groupId>
             <artifactId>opentracing-spring-cloud-starter</artifactId>
 		    <version>0.5.9</version>
-        </dependency>
-        <!--dependency>
+        </dependency-->
+        <dependency>
             <groupId>io.opentracing.contrib</groupId>
             <artifactId>opentracing-mongo-driver</artifactId>
             <version>0.1.5</version>
-        </dependency-->
+        </dependency>
 
 	</dependencies>
 
