@@ -107,26 +107,17 @@
 			<scope>test</scope>
 		</dependency>
 
-        <!-- tracing -->
-        <!-- gives you Trace Bean, they say -->
+        <!-- tracing, health, monitoring -->
         <dependency>
 	        <groupId>io.opentracing.contrib</groupId>
 		    <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
     		<version>${JAEGER_VERSION}</version>
 	    </dependency>
-        <!-- wants Tracer Bean, they say -->
-        <!--dependency>
-            <groupId>io.opentracing.contrib</groupId>
-            <artifactId>opentracing-spring-cloud-starter</artifactId>
-		    <version>0.5.9</version>
-        </dependency-->
-        <dependency>
-            <groupId>io.opentracing.contrib</groupId>
-            <artifactId>opentracing-mongo-driver</artifactId>
-            <version>0.1.5</version>
+	    <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${MICROMETER_VERSION}</version>
         </dependency>
-
-        <!-- health -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -140,15 +131,27 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>11</source>
-					<target>11</target>
-				</configuration>
-			</plugin>
-		</plugins>
+	    	<plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${JACOCO_VERSION}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
 	</build>
 
 </project>
