@@ -26,29 +26,31 @@ import io.swagger.v3.oas.models.info.Info;
 @EnableMongoRepositories(basePackageClasses = OrderRepository.class)
 public class OrderApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(OrderApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(OrderApplication.class, args);
+	}
 
-    @Bean
-    public OrderService orderService() {
-        return new OrderService();
-    }
+	@Bean
+	public OrderService orderService() {
+		return new OrderService();
+	}
 
-    @Bean
-    public OrderCommandHandler orderCommandHandler() {
-        return new OrderCommandHandler();
-    }
+	@Bean
+	public OrderCommandHandler orderCommandHandler() {
+		return new OrderCommandHandler();
+	}
 
-    @Bean
-    public SagaCommandDispatcher orderCommandDispatcher(OrderCommandHandler target,
-            SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
-        return sagaCommandDispatcherFactory.make("orderCommandDispatcher", target.commandHandlers());
-    }
+	@Bean
+	public SagaCommandDispatcher orderCommandDispatcher(OrderCommandHandler target,
+		SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
+		return sagaCommandDispatcherFactory.make("orderCommandDispatcher",
+			target.commandHandlers());
+	}
 
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI().components(new Components())
-                .info(new Info().title("Order service API").description("API of the T2 Store's order service."));
-    }
+	@Bean
+	public OpenAPI customOpenAPI() {
+		return new OpenAPI().components(new Components())
+			.info(new Info().title("Order service API")
+				.description("API of the T2 Store's order service."));
+	}
 }
