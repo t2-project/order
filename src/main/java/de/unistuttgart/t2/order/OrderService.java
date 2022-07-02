@@ -1,17 +1,15 @@
 package de.unistuttgart.t2.order;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import de.unistuttgart.t2.order.repository.OrderItem;
-import de.unistuttgart.t2.order.repository.OrderRepository;
-import de.unistuttgart.t2.order.repository.OrderStatus;
+import de.unistuttgart.t2.order.repository.*;
 
 /**
- * 
  * creates and updates orders.
- * 
- * @author maumau
  *
+ * @author maumau
  */
 public class OrderService {
 
@@ -19,10 +17,9 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     /**
-     * create a new Order and save it to the repository.
-     * 
-     * the status of the new order is {@link OrderStatus#SUCCESS SUCCESS}.
-     * 
+     * create a new Order and save it to the repository. the status of the new order is {@link OrderStatus#SUCCESS
+     * SUCCESS}.
+     *
      * @param sessionId id of session to create order for
      * @return orderId of created order
      */
@@ -33,15 +30,11 @@ public class OrderService {
     }
 
     /**
-     * Set the state of an order to {@link OrderStatus#FAILURE FAILURE}.
-     * 
-     * This operation is idempotent, as a order may never change from
-     * {@link OrderStatus#FAILURE FAILURE} to any other status.
-     * 
+     * Set the state of an order to {@link OrderStatus#FAILURE FAILURE}. This operation is idempotent, as a order may
+     * never change from {@link OrderStatus#FAILURE FAILURE} to any other status.
+     *
      * @param orderId id of order that is to be rejected
-     * 
-     * @throws NoSuchElementException if the id is in the db but retrieval fails
-     *                                anyway.
+     * @throws NoSuchElementException if the id is in the db but retrieval fails anyway.
      */
     public void rejectOrder(String orderId) {
 
