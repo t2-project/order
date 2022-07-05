@@ -18,8 +18,8 @@ import io.swagger.v3.oas.models.*;
 import io.swagger.v3.oas.models.info.Info;
 
 @Import({ SagaParticipantConfiguration.class, TramMessageProducerJdbcConfiguration.class,
-          EventuateTramKafkaMessageConsumerConfiguration.class,
-          OptimisticLockingDecoratorConfiguration.class })
+    EventuateTramKafkaMessageConsumerConfiguration.class,
+    OptimisticLockingDecoratorConfiguration.class })
 @EnableJpaRepositories
 @EnableAutoConfiguration
 @SpringBootApplication(scanBasePackageClasses = BaseScan.class)
