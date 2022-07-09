@@ -37,3 +37,4 @@ build/
 ### me
 **/*.log
 **/*.local.properties
+/test-classes/
