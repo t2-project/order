@@ -6,10 +6,11 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 
 /**
- * represents an order. each oder has a unique orderId to find it in the repository, a sessionId to correlate it to
- * other things and a timestamp because of reasons.
+ * Represents an order.<br>
+ * Each oder has a unique {@code orderId} to find it in the repository, a {@code sessionId} to correlate it to other
+ * things and a timestamp.
  *
- * @author sarah sophie stieß
+ * @author maumau
  */
 public class OrderItem {
 
@@ -21,15 +22,17 @@ public class OrderItem {
     private Date timestamp;
 
     /**
-     * used (and required) by spring framework.
+     * used (and required) by Spring.
      */
     public OrderItem() {}
 
     /**
-     * create a new order. there is no {@code orderId} because it gets set by repository. {@code status} of a new order
-     * is always {@link OrderStatus#SUCCESS}, {@code timestamp} is always the current time.
+     * Create a new order.<br>
+     * There is no {@code orderId} because it gets set by repository.<br>
+     * {@code status} of a new order is always {@link OrderStatus#SUCCESS}, {@code timestamp} is always the current
+     * time.
      *
-     * @param sessionId
+     * @param sessionId the session ID of the user making this request
      */
     public OrderItem(String sessionId) {
         this.sessionId = sessionId;
