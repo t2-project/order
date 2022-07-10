@@ -51,6 +51,6 @@ public class OrderApplication {
     public OpenAPI customOpenAPI() {
         return new OpenAPI().components(new Components())
             .info(new Info().title("Order service API")
-                .description("API of the T2 Store's order service."));
+                .description("API of the T2-Project's order service."));
     }
 }

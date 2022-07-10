@@ -1,11 +1,11 @@
 # Order Service
 
-This service is part of the T2 Store.
+This service is part of the T2-Project.
 It is responsible for saving orders to the database.
 
 ## Build and Run
 
-Confer the [Documentation](https://t2-documentation.readthedocs.io/en/latest/guides/kube.html) on how to build, run or deploy the T2 Store services.
+Confer the [Documentation](https://t2-documentation.readthedocs.io/en/latest/guides/kube.html) on how to build, run or deploy the T2-Project services.
 
 ## Usage
 
