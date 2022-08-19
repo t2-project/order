@@ -22,7 +22,7 @@ import io.swagger.v3.oas.models.info.Info;
     OptimisticLockingDecoratorConfiguration.class })
 @EnableJpaRepositories
 @EnableAutoConfiguration
-@SpringBootApplication(scanBasePackageClasses = BaseScan.class)
+@SpringBootApplication(scanBasePackageClasses = { BaseScan.class, OrderApplication.class })
 @EnableMongoRepositories(basePackageClasses = OrderRepository.class)
 public class OrderApplication {
 
