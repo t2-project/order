@@ -42,7 +42,7 @@ public class OrderCommandHandler {
         SagaData data = cmd.getData();
 
         if (data.getSessionId() == null) {
-            LOG.info(String.format("could not process order action with missing session id"));
+            LOG.info("could not process order action with missing session id");
             return CommandHandlerReplyBuilder.withFailure();
         }
 
@@ -58,12 +58,12 @@ public class OrderCommandHandler {
      * @return the reply message
      */
     public Message rejectOrder(CommandMessage<CompensationCommand> cm) {
-        LOG.info("order received  compensation");
+        LOG.info("order received compensation");
         CompensationCommand cmd = cm.getCommand();
         SagaData data = cmd.getData();
 
         if (data.getSessionId() == null) {
-            LOG.info(String.format("could not process order action with missing order id"));
+            LOG.info("could not process order action with missing order id");
             return CommandHandlerReplyBuilder.withFailure();
         }
 
