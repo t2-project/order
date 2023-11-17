@@ -5,7 +5,7 @@ It is responsible for saving orders to the database.
 
 ## Build and Run
 
-Refer to the [Documentation](https://t2-documentation.readthedocs.io/en/latest/guides/deploy.html) on how to build, run or deploy the T2-Project services.
+Refer to the [Documentation](https://t2-documentation.readthedocs.io/en/latest/microservices/deploy.html) on how to build, run or deploy the T2-Project services.
 
 ## Usage
 
