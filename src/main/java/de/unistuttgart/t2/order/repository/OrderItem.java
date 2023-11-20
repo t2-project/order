@@ -1,9 +1,9 @@
 package de.unistuttgart.t2.order.repository;
 
+import org.springframework.data.annotation.Id;
+
 import java.time.Instant;
 import java.util.Date;
-
-import org.springframework.data.annotation.Id;
 
 /**
  * Represents an order.<br>
