@@ -1,15 +1,19 @@
 package de.unistuttgart.t2.order;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.*;
+import de.unistuttgart.t2.order.repository.OrderItem;
+import de.unistuttgart.t2.order.repository.OrderRepository;
+import de.unistuttgart.t2.order.repository.OrderStatus;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.test.context.*;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import de.unistuttgart.t2.order.repository.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
@@ -23,11 +27,11 @@ public class OrderTest {
     @Autowired
     OrderRepository orderRepository;
 
-    String orderid;
+    String orderId;
 
     @BeforeEach
     public void setup() {
-        orderid = orderRepository.save(new OrderItem("sessionId")).getOrderId();
+        orderId = orderRepository.save(new OrderItem("sessionId")).getOrderId();
     }
 
     @Test
@@ -47,13 +51,13 @@ public class OrderTest {
     @Test
     public void testRejectOrder() {
         // execute
-        orderService.rejectOrder(orderid);
+        orderService.rejectOrder(orderId);
 
         // assert
-        assertTrue(orderRepository.existsById(orderid));
-        assertTrue(orderRepository.findById(orderid).isPresent());
+        assertTrue(orderRepository.existsById(orderId));
+        assertTrue(orderRepository.findById(orderId).isPresent());
 
-        OrderItem item = orderRepository.findById(orderid).get();
+        OrderItem item = orderRepository.findById(orderId).get();
         assertEquals("sessionId", item.getSessionId());
         assertEquals(OrderStatus.FAILURE, item.getStatus());
     }

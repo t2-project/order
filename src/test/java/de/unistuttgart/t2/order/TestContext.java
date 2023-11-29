@@ -1,9 +1,10 @@
 package de.unistuttgart.t2.order;
 
-import org.springframework.context.annotation.*;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-
 import de.unistuttgart.t2.order.repository.OrderRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
 @Profile("test")
