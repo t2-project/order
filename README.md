@@ -19,7 +19,7 @@ However it might by useful to run it locally for debugging.
 
 | property | read from env var | description |
 | -------- | ----------------- | ----------- |
-| spring.data.mongodb.uri | MONGO_HOST | host of the mondo db |
+| spring.data.mongodb.uri | MONGO_HOST | hostname of the mongo db |
 
 Properties for the CDC.
 see  [eventuate tram cdc](https://eventuate.io/docs/manual/eventuate-tram/latest/getting-started-eventuate-tram.html) for explanations.
